@@ -4,6 +4,7 @@
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Andreas Gohr <andi@splitbrain.org>
+ * @author  Max Qian <zq2@illinois.edu>
  */
 
 // must be run within Dokuwiki
@@ -86,10 +87,24 @@ class helper_plugin_smtp extends DokuWiki_Plugin {
        }
      }
 
+     /**
+      * Helper function that check input
+      *
+      * @param string $type type of email template to use
+      *
+      * @return boolean
+      */
      private function checkType($type) {
        return $type === 'verification' || $type === 'setPassword';
      }
 
+     /**
+      * Helper function that return subject template
+      *
+      * @param string $type type of email template to use
+      *
+      * @return string
+      */
      private function setMailSubject($type) {
        if($type === 'verification') {
          return 'Paperclip Verification';
@@ -98,6 +113,15 @@ class helper_plugin_smtp extends DokuWiki_Plugin {
        return 'Paperclip Reset Password';
      }
 
+
+     /**
+      * Helper function that return body template
+      *
+      * @param string $type type of email template to use
+      * @param string $link special link that is attached in the e-mail
+      *
+      * @return string
+      */
      private function setMailBody($link, $type) {
        if($type === 'verification') {
          return "Hi @USER@\n\nPlease use following link to verify your account:" . $link ;
