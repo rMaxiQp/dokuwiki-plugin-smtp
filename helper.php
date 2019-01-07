@@ -75,16 +75,7 @@ class helper_plugin_smtp extends DokuWiki_Plugin {
        $mail->setBody($this->setMailBody($info['link'], $type));
 
        // send the mail
-       $ok = $mail->send();
-
-       // check result
-       if($ok){
-           msg('Message was sent. SMTP seems to work.',1);
-           return true;
-       }else{
-           msg('Message wasn\'t sent. SMTP seems not to work properly.',-1);
-           return false;
-       }
+       return $mail->send();
      }
 
      /**
@@ -95,7 +86,7 @@ class helper_plugin_smtp extends DokuWiki_Plugin {
       * @return boolean
       */
      private function checkType($type) {
-       return $type === 'verification' || $type === 'setPassword';
+       return $type === 'verification';
      }
 
      /**
@@ -110,7 +101,7 @@ class helper_plugin_smtp extends DokuWiki_Plugin {
          return 'Paperclip Verification';
        }
 
-       return 'Paperclip Reset Password';
+       return 'ERROR, DO NOT ENTER';
      }
 
 
@@ -127,7 +118,7 @@ class helper_plugin_smtp extends DokuWiki_Plugin {
          return "Hi @USER@\n\nPlease use following link to verify your account:" . $link ;
        }
 
-       return "Hi @USER@\n\nPlease use following link to reset your password:". $link;
+       return "ERROR, DO NOT ENTER";
      }
 
 }
